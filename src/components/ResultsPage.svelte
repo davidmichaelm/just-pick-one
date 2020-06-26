@@ -1,9 +1,10 @@
 <script>
     import Result from "./Result.svelte";
+    import { yelpResults } from "../routes/_stores.js";
 
-    export let results;
+    export let currentPage;
 </script>
 
-{#each results as result}
+{#each $yelpResults as result}
     <Result data={result}/>
 {/each}

@@ -1,22 +1,22 @@
 <script>
     import Checkbox from "../components/checkbox.svelte"
-    import Result from "../components/Result.svelte";
+    import { locationData, yelpResults } from "../routes/_stores.js";
 
     export let results = [];
-    export let locationData;
+
+    export let currentPage;
 
     function submitClick(event) {
         results = [];
-        event.preventDefault();
 
-        if (!locationData.locationType) {
+        if (!$locationData.locationType) {
             console.log("No location data");
             return;
         }
 
         let form = {};
         form.categories = Object.fromEntries(new FormData(document.querySelector("form")).entries());
-        form.locationData = locationData;
+        form.locationData = $locationData;
 
         const formJson = JSON.stringify(form);
         console.log(formJson);
@@ -33,15 +33,17 @@
     }
 
     function handleResponse(response) {
+        // need error handling
         console.log(response);
         for (let i = 0; i < 3; i++) {
             const randomInt = getRandomInt(response.businesses.length);
             console.log(randomInt);
             results.push(response.businesses[randomInt]);
-            results = results;
 
             response.businesses.splice(randomInt, 1);
         }
+        $yelpResults = results;
+        currentPage++;
         console.log(results);
     }
 
@@ -51,7 +53,7 @@
 </script>
 
 
-<form on:submit={submitClick}>
+<form on:submit|preventDefault={submitClick}>
     <Checkbox id={"hotdogs"} name={"Fast Food"}/>
     <Checkbox id={"burgers"} name={"Burgers"}/>
     <Checkbox id={"chinese"} name={"Chinese"}/>

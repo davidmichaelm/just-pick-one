@@ -1,14 +1,19 @@
 <script>
-    export let locationData = {
+    import { locationData } from "../routes/_stores.js";
+
+    $locationData = {
         locationType: null,
         zipCode: null,
         latitude: null,
         longitude: null
     };
 
+    export let currentPage;
+
     function useZipCode() {
-        if (validateZipCode(locationData.zipCode)) {
-            locationData.locationType = "zipCode";
+        if (validateZipCode($locationData.zipCode)) {
+            $locationData.locationType = "zipCode";
+            currentPage++;
         } else {
             console.log("Zip Code is not valid");
         }
@@ -28,9 +33,10 @@
     }
 
     function success(position) {
-        locationData.locationType = "geolocation";
-        locationData.latitude = position.coords.latitude;
-        locationData.longitude = position.coords.longitude;
+        $locationData.locationType = "geolocation";
+        $locationData.latitude = position.coords.latitude;
+        $locationData.longitude = position.coords.longitude;
+        currentPage++;
     }
 
     function error() {
@@ -39,5 +45,5 @@
 
 </script>
 
-<input type="text" name="zipcode" id="zipcode" bind:value={locationData.zipCode}> <button on:click={useZipCode}>Enter Zip Code</button> or
+<input type="text" name="zipcode" id="zipcode" bind:value={$locationData.zipCode}> <button on:click={useZipCode}>Enter Zip Code</button> or
 <button on:click={useCurrentLocation}>Use Current Location</button>

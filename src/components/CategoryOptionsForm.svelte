@@ -3,12 +3,22 @@
     import Result from "../components/Result.svelte";
 
     export let results = [];
+    export let locationData;
+
     function submitClick(event) {
         results = [];
         event.preventDefault();
 
-        const form = new FormData(document.querySelector("form"));
-        const formJson = JSON.stringify(Object.fromEntries(form.entries()));
+        if (!locationData.locationType) {
+            console.log("No location data");
+            return;
+        }
+
+        let form = {};
+        form.categories = Object.fromEntries(new FormData(document.querySelector("form")).entries());
+        form.locationData = locationData;
+
+        const formJson = JSON.stringify(form);
         console.log(formJson);
 
         fetch("/restaurants/find", {

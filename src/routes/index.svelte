@@ -20,10 +20,6 @@
         };
     });
 
-
-    let results = [];
-    let locationData;
-
     let currentPage = 1;
 </script>
 

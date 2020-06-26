@@ -1,13 +1,6 @@
 <script>
     import { locationData } from "../routes/_stores.js";
 
-    $locationData = {
-        locationType: null,
-        zipCode: null,
-        latitude: null,
-        longitude: null
-    };
-
     export let currentPage;
 
     function useZipCode() {

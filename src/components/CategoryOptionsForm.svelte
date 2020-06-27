@@ -1,9 +1,7 @@
 <script>
     import Checkbox from "../components/checkbox.svelte"
-    import { locationData, yelpResults } from "../routes/_stores.js";
+    import { locationData, yelpResults, currentPage } from "../routes/_stores.js";
     import { getRandomInt } from "../util.js";
-
-    export let currentPage;
 
     function submitClick() {
         if (!$locationData.locationType) {
@@ -42,7 +40,7 @@
                 response.businesses.splice(randomInt, 1);
             }
             $yelpResults = results;
-            currentPage++;
+            $currentPage++;
             console.log(results);
         } else {
             console.log("No results")

@@ -1,7 +1,7 @@
 <script>
     import ResultsPage from "../components/ResultsPage.svelte";
     import CategoryOptionsForm from "../components/CategoryOptionsForm.svelte";
-    //import { locationData, yelpData } from "./_stores.js";
+    import { currentPage } from "./_stores.js";
     import { onMount } from 'svelte';
 
     let Location;
@@ -20,7 +20,6 @@
         };
     });
 
-    let currentPage = 1;
 </script>
 
 <svelte:head>
@@ -28,7 +27,7 @@
 </svelte:head>
 
 {#if pages != null}
-    <svelte:component this={pages[currentPage]} bind:currentPage/>
+    <svelte:component this={pages[$currentPage]}/>
 {/if}
 
 

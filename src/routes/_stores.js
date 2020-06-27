@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 
 export let locationData = writable({
     locationType: null,
@@ -6,4 +6,7 @@ export let locationData = writable({
     latitude: null,
     longitude: null
 });
+
 export let yelpResults = writable(null);
+
+export let currentPage = writable(1);

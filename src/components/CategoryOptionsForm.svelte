@@ -1,6 +1,7 @@
 <script>
     import Checkbox from "../components/checkbox.svelte"
     import { locationData, yelpResults } from "../routes/_stores.js";
+    import { getRandomInt } from "../util.js";
 
     export let currentPage;
 
@@ -46,10 +47,6 @@
         } else {
             console.log("No results")
         }
-    }
-
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
     }
 </script>
 

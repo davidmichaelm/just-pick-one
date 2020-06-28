@@ -1,7 +1,7 @@
 <script>
     import Result from "./Result.svelte";
-    import { yelpResults, currentPage } from "../routes/_stores.js";
-    import { getRandomInt } from "../util.js";
+    import { yelpResults } from "../routes/_stores.js";
+    import { getRandomInt, startOver } from "../util.js";
 
     function chooseFinalOption() {
         setRandomOption();
@@ -15,10 +15,6 @@
 
     function hideFinalOptionButton() {
         document.getElementById("chooseFinalOption").style.display = "none";
-    }
-
-    function startOver() {
-        $currentPage = 1;
     }
 </script>
 

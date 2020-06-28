@@ -1,10 +1,11 @@
 <script>
-    import { locationData, currentPage } from "../routes/_stores.js";
+    import { locationData } from "../routes/_stores.js";
+    import { nextPage } from "../util.js";
 
     function useZipCode() {
         if (validateZipCode($locationData.zipCode)) {
             $locationData.locationType = "zipCode";
-            $currentPage++;
+            nextPage();
         } else {
             console.log("Zip Code is not valid");
         }
@@ -27,7 +28,7 @@
         $locationData.locationType = "geolocation";
         $locationData.latitude = position.coords.latitude;
         $locationData.longitude = position.coords.longitude;
-        $currentPage++;
+        nextPage();
     }
 
     function error() {

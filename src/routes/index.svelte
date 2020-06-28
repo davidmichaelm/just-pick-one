@@ -1,17 +1,29 @@
 <script>
-    import ResultsPage from "../components/ResultsPage.svelte";
-    import CategoryOptionsForm from "../components/CategoryOptionsForm.svelte";
     import { currentPage } from "./_stores.js";
-    import { onMount } from 'svelte';
+    import { onMount } from "svelte";
 
     let Location;
-    /*let CategoryOptionsForm;
-    let ResultsPage;*/
+    let CategoryOptionsForm;
+    let ResultsPage;
     let pages;
 
     onMount(async () => {
-        const module = await import('../components/LocationFinder.svelte');
-        Location = module.default;
+        window.history.replaceState($currentPage, null, "");
+
+        window.onpopstate = function (event) {
+            if (event.state) {
+                $currentPage = event.state;
+            }
+        };
+
+        const locationModule = await import('../components/LocationFinder.svelte');
+        Location = locationModule.default;
+
+        const categoryOptionsFormModule = await import('../components/CategoryOptionsForm.svelte');
+        CategoryOptionsForm = categoryOptionsFormModule.default;
+
+        const resultsPageModule = await import('../components/ResultsPage.svelte');
+        ResultsPage = resultsPageModule.default;
 
         pages = {
             1: Location,
@@ -29,9 +41,3 @@
 {#if pages != null}
     <svelte:component this={pages[$currentPage]}/>
 {/if}
-
-
-<!--
-<svelte:component this={Location} bind:locationData/>
-<CategoryOptionsForm bind:results locationData={locationData}/>
-<ResultsPage results={results}/>-->

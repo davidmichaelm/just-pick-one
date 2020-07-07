@@ -28,8 +28,8 @@ function makeQueryString(formData) {
     if (Object.keys(formData).length > 0) {
 
         let location;
-        if (formData.locationData.locationType == "zipCode") {
-            location = "location=" + formData.locationData.zipCode;
+        if (formData.locationData.locationType == "address") {
+            location = "location=" + formData.locationData.address;
         } else {
             location = "latitude=" + formData.locationData.latitude + "&longitude=" +formData.locationData.longitude;
         }

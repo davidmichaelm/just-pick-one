@@ -1,8 +1,8 @@
 <script>
-    import Checkbox from "../components/checkbox.svelte"
-    import { locationData, yelpResults } from "../routes/_stores.js";
-    import { getRandomInt, backPage, nextPage } from "../util.js";
-    import { categories } from "../routes/_categories.js";
+    import Checkbox from "./Checkbox.svelte"
+    import { locationData, yelpResults } from "../../routes/restaurants/_stores.js";
+    import { getRandomInt, backPage, nextPage } from "../../util.js";
+    import { categories } from "../../routes/restaurants/_categories.js";
 
     function submitClick() {
         fetch("/restaurants/find", {

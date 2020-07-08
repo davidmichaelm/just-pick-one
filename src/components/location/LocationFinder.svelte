@@ -1,7 +1,7 @@
 <script>
-    import AddressBox from "../components/AddressBox.svelte";
-    import {locationData} from "../routes/_stores.js";
-    import {nextPage} from "../util.js";
+    import AddressBox from "./AddressBox.svelte";
+    import {locationData} from "../../routes/restaurants/_stores.js";
+    import {nextPage} from "../../util.js";
     import GeolocationButton from "./GeolocationButton.svelte";
 
     function useLocation(event) {

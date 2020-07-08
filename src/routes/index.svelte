@@ -1,5 +1,5 @@
 <script>
-    import { currentPage } from "./_stores.js";
+    import { currentPage } from "./restaurants/_stores.js";
     import { onMount } from "svelte";
 
     let Location;
@@ -16,13 +16,13 @@
             }
         };
 
-        const locationModule = await import('../components/LocationFinder.svelte');
+        const locationModule = await import('../components/location/LocationFinder.svelte');
         Location = locationModule.default;
 
-        const categoryOptionsFormModule = await import('../components/CategoryOptionsForm.svelte');
+        const categoryOptionsFormModule = await import('../components/categories/CategoryOptionsForm.svelte');
         CategoryOptionsForm = categoryOptionsFormModule.default;
 
-        const resultsPageModule = await import('../components/ResultsPage.svelte');
+        const resultsPageModule = await import('../components/results/ResultsPage.svelte');
         ResultsPage = resultsPageModule.default;
 
         pages = {

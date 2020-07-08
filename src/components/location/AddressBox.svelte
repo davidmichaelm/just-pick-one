@@ -6,7 +6,7 @@
     let clickToComplete = false;
     export let addressText = "";
 
-    $: fetch("/autocomplete?input=" + addressText, {
+    $: fetch("/location/autocomplete?input=" + addressText, {
         method: "GET",
         headers: {
             'Content-Type': 'application/json'

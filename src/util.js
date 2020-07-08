@@ -1,4 +1,4 @@
-import { currentPage } from "./routes/_stores";
+import { currentPage } from "./routes/restaurants/_stores";
 
 let currentPageValue;
 currentPage.subscribe(value => {

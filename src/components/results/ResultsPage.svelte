@@ -1,7 +1,7 @@
 <script>
     import Result from "./Result.svelte";
-    import { yelpResults } from "../routes/_stores.js";
-    import { getRandomInt, startOver } from "../util.js";
+    import { yelpResults } from "../../routes/restaurants/_stores.js";
+    import { getRandomInt, startOver } from "../../util.js";
 
     function chooseFinalOption() {
         setRandomOption();

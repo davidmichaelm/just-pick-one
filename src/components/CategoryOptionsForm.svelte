@@ -2,8 +2,21 @@
     import Checkbox from "../components/checkbox.svelte"
     import { locationData, yelpResults } from "../routes/_stores.js";
     import { getRandomInt, backPage, nextPage } from "../util.js";
+    import { categories } from "../routes/_categories.js";
 
     function submitClick() {
+        fetch("/restaurants/find", {
+            method: "POST",
+            body: getFormData(),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+                .then(response => response.json())
+                .then(response => handleResponse(response))
+    }
+
+    function getFormData() {
         if (!$locationData.locationType) {
             console.log("No location data");
             return;
@@ -14,58 +27,38 @@
             locationData: $locationData
         };
 
-        const formJson = JSON.stringify(form);
-        console.log(formJson);
-
-        fetch("/restaurants/find", {
-            method: "POST",
-            body: formJson,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-                .then(response => response.json())
-                .then(response => handleResponse(response))
+        return JSON.stringify(form);
     }
 
     function handleResponse(response) {
         console.log(response);
 
         if (response && response.businesses) {
-            let results = [];
-            for (let i = 0; i < 3; i++) {
-                const randomInt = getRandomInt(response.businesses.length);
-                results.push(response.businesses[randomInt]);
-
-                response.businesses.splice(randomInt, 1);
-            }
-            $yelpResults = results;
+            $yelpResults = getRandomChoices(response.businesses, 3);
             nextPage();
-            console.log(results);
         } else {
             console.log("No results")
         }
+    }
+
+    function getRandomChoices(data, numChoices) {
+        let results = [];
+        for (let i = 0; i < numChoices; i++) {
+            const randomInt = getRandomInt(data.length);
+            results.push(data[randomInt]);
+
+            data.splice(randomInt, 1);
+        }
+
+        return results;
     }
 </script>
 
 
 <form on:submit|preventDefault={submitClick}>
-    <Checkbox id={"hotdogs"} name={"Fast Food"}/>
-    <Checkbox id={"burgers"} name={"Burgers"}/>
-    <Checkbox id={"chinese"} name={"Chinese"}/>
-    <Checkbox id={"mexican"} name={"Mexican"}/>
-    <Checkbox id={"italian"} name={"Italian"}/>
-    <Checkbox id={"japanese"} name={"Japanese"}/>
-    <Checkbox id={"thai"} name={"Thai"}/>
-    <Checkbox id={"breakfast_brunch"} name={"Breakfast & Brunch"}/>
-    <Checkbox id={"mediterranean"} name={"Mediterranean"}/>
-    <Checkbox id={"bars"} name={"Bars"}/>
-    <Checkbox id={"cafes"} name={"Cafes"}/>
-    <Checkbox id={"vegetarian"} name={"Vegetarian"}/>
-    <Checkbox id={"vegan"} name={"Vegan"}/>
-    <br>
-    <Checkbox id={"deliver"} name={"Delivery"}/>
-    <Checkbox id={"Takeout"} name={"Takeout"}/>
+    {#each categories as category}
+        <Checkbox id={category.id} name={category.name}/>
+    {/each}
 
     <input type="submit" value="Choose for me!">
 </form>

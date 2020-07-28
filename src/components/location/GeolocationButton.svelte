@@ -27,4 +27,23 @@
     }
 </script>
 
-<button on:click={checkCurrentLocation}>Use My Current Location</button>
+<style>
+    div {
+        color: #333;
+    }
+
+    div:hover {
+        color: gray;
+        cursor: pointer;
+    }
+
+    span, img {
+        vertical-align: middle;
+    }
+</style>
+
+
+<div on:click={checkCurrentLocation}>
+    <img src="target.png" height="19px" width="19px"/>
+    <span>Use My Current Location</span>
+</div>

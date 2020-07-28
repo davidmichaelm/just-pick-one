@@ -54,12 +54,41 @@
     }
 </script>
 
+<style>
+    .flex {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    input[type=submit] {
+        background-color: #e63946;
+        color: white;
+        display: inline-block;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        font-size: 1em;
+        font-family: Roboto;
+    }
+
+    input[type=submit]:hover {
+        background-color: #ff4252;
+    }
+</style>
+
 
 <form on:submit|preventDefault={submitClick}>
-    {#each categories as category}
-        <Checkbox id={category.id} name={category.name}/>
-    {/each}
+    <div class="flex">
+        {#each categories as category}
+            <Checkbox id={category.id} name={category.name}/>
+        {/each}
+    </div>
 
-    <input type="submit" value="Choose for me!">
+    <div class="flex">
+        <input type="submit" value="Choose for me!">
+    </div>
 </form>
 <a href="" on:click={backPage}>Back to Location</a>

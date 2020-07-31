@@ -31,5 +31,7 @@
     {/each}
 </div>
 
-<button id="chooseFinalOption" on:click={chooseFinalOption}>Choose for me!</button>
-<button on:click={startOver}>Start over!</button>
+<div>
+    <button class="button" id="chooseFinalOption" on:click={chooseFinalOption}>Narrow it down</button>
+    <button class="button alt-button" on:click={startOver}>Start over</button>
+</div>

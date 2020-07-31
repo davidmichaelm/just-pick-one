@@ -76,16 +76,9 @@
     .button {
         vertical-align: middle;
         padding: 8.75px 12.5px 8.75px 12.5px;
-        color: white;
-        background-color: #e63946;
-        border-radius: 5px;
         margin-left: 5px;
     }
 
-    .button:hover {
-        background-color: #ff4252;
-        cursor: pointer;
-    }
 </style>
 
 <div class="flex">

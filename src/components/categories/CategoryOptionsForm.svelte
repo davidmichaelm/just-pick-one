@@ -60,23 +60,6 @@
         flex-wrap: wrap;
         justify-content: center;
     }
-
-    input[type=submit] {
-        background-color: #e63946;
-        color: white;
-        display: inline-block;
-        padding: 10px 20px;
-        border-radius: 5px;
-        text-align: center;
-        cursor: pointer;
-        border: none;
-        font-size: 1em;
-        font-family: Roboto;
-    }
-
-    input[type=submit]:hover {
-        background-color: #ff4252;
-    }
 </style>
 
 
@@ -88,7 +71,7 @@
     </div>
 
     <div class="flex">
-        <input type="submit" value="Choose for me!">
+        <input class="button" type="submit" value="Choose for me!">
     </div>
 </form>
 <a href="" on:click={backPage}>Back to Location</a>

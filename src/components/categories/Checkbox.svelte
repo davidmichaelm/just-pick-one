@@ -5,8 +5,6 @@
 
 <style>
     label {
-        background-color: #1d3557;
-        color: white;
         display: inline-block;
         padding: 25px;
         border-radius: 5px;
@@ -15,9 +13,6 @@
         cursor: pointer;
     }
 
-    label:hover {
-        background-color: #457b9d;
-    }
 
     input:checked + label {
         background-color: #e63946;
@@ -31,5 +26,5 @@
 
 <div>
     <input type="checkbox" name="{id}" id="{id}" value="on">
-    <label for="{id}">{name}</label>
+    <label class="alt-button" for="{id}">{name}</label>
 </div>

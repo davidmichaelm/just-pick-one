@@ -29,6 +29,32 @@ code {
 	border-radius: 2px;
 }
 
+.button {
+	background-color: #e63946;
+	color: white;
+	display: inline-block;
+	padding: 10px 20px;
+	border-radius: 5px;
+	text-align: center;
+	cursor: pointer;
+	border: none;
+	font-size: 1em;
+	font-family: Roboto, sans-serif;
+}
+
+.button:hover {
+	background-color: #ff4252;
+}
+
+.alt-button {
+	color: white;
+	background-color: #1d3557;
+}
+
+.alt-button:hover {
+	background-color: #457b9d;
+}
+
 @media (min-width: 400px) {
 	body {
 		font-size: 16px;

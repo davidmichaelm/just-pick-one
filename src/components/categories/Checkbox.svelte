@@ -22,6 +22,13 @@
         position: absolute;
         opacity: 0;
     }
+
+    @media (max-width: 400px) {
+        label {
+            padding: 5px;
+            width: 130px;
+        }
+    }
 </style>
 
 <div>

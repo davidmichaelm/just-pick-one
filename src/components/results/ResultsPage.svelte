@@ -23,6 +23,12 @@
         display: flex;
         flex-direction: row;
     }
+
+    @media (max-width: 400px) {
+        #results {
+            flex-direction: column;
+        }
+    }
 </style>
 
 <div id="results">

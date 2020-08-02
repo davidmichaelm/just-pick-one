@@ -43,8 +43,8 @@
     }
 
     .container {
-        height: 100vh;
-        min-height: 500px;
+        /*height: 100vh;
+        min-height: 500px;*/
     }
 
     main :global(div) {
@@ -57,6 +57,10 @@
         padding: 10px;
         border-radius: 5px;
         font-size: 3em;
+    }
+
+    header {
+        margin-top: 20px;
     }
 </style>
 

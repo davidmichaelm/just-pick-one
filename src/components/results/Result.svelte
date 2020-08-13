@@ -39,6 +39,7 @@
         color: white;
         background-color: #e63946;
         padding: 10px;
+        margin: 15px;
         border-radius: 5px;
         width: 250px;
     }

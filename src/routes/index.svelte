@@ -43,23 +43,23 @@
     }
 
     .container {
-        /*height: 100vh;
-        min-height: 500px;*/
+        min-height: 500px;
     }
 
-    main :global(div) {
-        margin: 15px;
-    }
+    /*main :global(div) {*/
+    /*    margin: 15px;*/
+    /*}*/
 
     h1 {
-        color: white;
-        background-color: #e63946;
-        padding: 10px;
-        border-radius: 5px;
+        margin: 0;
         font-size: 3em;
     }
 
     header {
+        color: white;
+        background-color: #e63946;
+        padding: 10px;
+        border-radius: 5px;
         margin-top: 20px;
     }
 </style>

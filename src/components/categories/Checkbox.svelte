@@ -7,6 +7,7 @@
     label {
         display: inline-block;
         padding: 25px;
+        margin: 15px;
         border-radius: 5px;
         width: 150px;
         text-align: center;

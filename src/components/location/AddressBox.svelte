@@ -62,6 +62,7 @@
 <style>
     .flex {
         display: flex;
+        margin: 15px;
     }
 
     input {

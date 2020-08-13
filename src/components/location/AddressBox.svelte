@@ -1,5 +1,5 @@
 <script>
-    import { createEventDispatcher } from 'svelte';
+    import {createEventDispatcher} from 'svelte';
 
     const dispatch = createEventDispatcher();
     let autocompletes = [];
@@ -23,7 +23,7 @@
 
     function checkAddress() {
         if (addressText === undefined || addressText === null || addressText === "") {
-            // error mesage for user
+            // error message for user
             console.log("address is empty");
             return;
         }
@@ -80,19 +80,34 @@
         margin-left: 5px;
     }
 
-</style>
+    #clickToComplete {
+        margin: 15px;
+        text-align: center;
+    }
 
-<div class="flex">
-    <input type="text" list="places" bind:value={addressText} placeholder="Enter Zip Code, City, or State">
-    <span class="button" on:click={checkAddress}>Go</span>
-    <datalist id="places">
-        {#each autocompletes as autocomplete}
-            <option value="{autocomplete}">
-        {/each}
-    </datalist>
-    {#if clickToComplete}
+    a:hover {
+        color: gray;
+    }
+
+</style>
+{#if !clickToComplete}
+    <div class="flex">
+
+        <input type="text" list="places" bind:value={addressText} placeholder="Enter Zip Code, City, or State">
+        <span class="button" on:click={checkAddress}>Go</span>
+        <datalist id="places">
+            {#each autocompletes as autocomplete}
+                <option value="{autocomplete}">
+            {/each}
+        </datalist>
+    </div>
+{/if}
+
+{#if clickToComplete}
+    <div id="clickToComplete">
+        <h3>Did you mean...</h3>
         {#each autocompletes as autocomplete}
             <div on:click={() => useClickToComplete(autocomplete)}><a href="#">{autocomplete}</a></div>
         {/each}
-    {/if}
-</div>
+    </div>
+{/if}

@@ -3,6 +3,7 @@
     import { locationData, yelpResults } from "../../routes/restaurants/_stores.js";
     import { getRandomInt, backPage, nextPage } from "../../util.js";
     import { categories } from "../../routes/restaurants/_categories.js";
+    import LocationStatus from "../location/LocationStatus.svelte";
 
     function submitClick() {
         fetch("/restaurants/find", {
@@ -59,10 +60,11 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+        margin: 15px;
     }
 </style>
 
-
+<LocationStatus/>
 <form on:submit|preventDefault={submitClick}>
     <div class="flex">
         {#each categories as category}
@@ -74,4 +76,3 @@
         <input class="button" type="submit" value="Choose for me!">
     </div>
 </form>
-<a href="" on:click={backPage}>Back to Location</a>

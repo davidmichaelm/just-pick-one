@@ -10,5 +10,5 @@
     }
 </script>
 
-<AddressBox on:use={useLocation}/> or
+<AddressBox on:use={useLocation}/>
 <GeolocationButton on:use={useLocation}/>

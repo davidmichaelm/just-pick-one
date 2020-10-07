@@ -1,6 +1,7 @@
 <script>
-    import { currentPage } from "./restaurants/_stores.js";
-    import { onMount } from "svelte";
+    import {currentPage} from "./restaurants/_stores.js";
+    import {onMount} from "svelte";
+    import LocationStatus from "../components/location/LocationStatus.svelte";
 
     let Location;
     let CategoryOptionsForm;
@@ -71,7 +72,6 @@
 <div class="container center">
     <header class="center">
         <h1>Just Pick One</h1>
-
         <div>Let us choose the restaurant for you.</div>
     </header>
 

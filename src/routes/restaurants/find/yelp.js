@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 
 export async function post(req, res, next) {
 
-    console.log(req.body);
+    console.log(req.params);
 
     if (!req.body.locationData.locationType) {
         console.log("No location data");
@@ -22,26 +22,43 @@ export async function post(req, res, next) {
     res.end(JSON.stringify(yelpData));
 }
 
+export async function get(req, res, next) {
+    console.log(req.query);
+
+    if (!req.query.locationType) {
+        console.log("No location data");
+        return;
+    }
+
+    const queryString = makeQueryString(req.query);
+    console.log(queryString);
+
+    const yelpData = await getYelpData(queryString);
+    console.log(yelpData);
+
+    res.writeHead(200, {
+        'Content-Type': 'application/json'
+    });
+
+    res.end(JSON.stringify(yelpData));
+}
+
 function makeQueryString(formData) {
     let query = "https://api.yelp.com/v3/businesses/search?";
 
     if (Object.keys(formData).length > 0) {
 
         let location;
-        if (formData.locationData.locationType == "address") {
-            location = "location=" + formData.locationData.address;
+        if (formData.locationType === "address") {
+            location = "location=" + formData.address;
         } else {
-            location = "latitude=" + formData.locationData.latitude + "&longitude=" +formData.locationData.longitude;
+            location = "latitude=" + formData.latitude + "&longitude=" +formData.longitude;
         }
 
         query += location;
 
 
-        let categories = "&categories=";
-        for (let category in formData.categories) {
-            categories += category + ",";
-        }
-        categories = categories.slice(0, -1); // remove end comma
+        let categories = "&categories=" + formData.categories;
         query += categories;
     }
 

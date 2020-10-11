@@ -1,9 +1,3 @@
-<script context="module">
-    export async function preload(page, session) {
-        return this.redirect(302, 'restaurants/location');
-    }
-</script>
-
 <style>
     .center {
         display: flex;
@@ -32,15 +26,19 @@
         border-radius: 5px;
         margin-top: 20px;
     }
-</style>
 
-<svelte:head>
-    <title>Just Pick One</title>
-</svelte:head>
+    a {
+        text-decoration: none;
+    }
+</style>
 
 <div class="container center">
     <header class="center">
-        <h1>Just Pick One</h1>
+        <h1><a href="/restaurants/location">Just Pick One</a></h1>
         <div>Let us choose the restaurant for you.</div>
     </header>
+
+    <main class="center">
+        <slot></slot>
+    </main>
 </div>

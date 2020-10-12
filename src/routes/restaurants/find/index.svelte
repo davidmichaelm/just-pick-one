@@ -13,7 +13,7 @@
 
         const data = await this.fetch("restaurants/find/yelp?" + new URLSearchParams(params));
         const yelpResults = await data.json();
-        return { yelpResults, params };
+        return {yelpResults, params};
     }
 </script>
 
@@ -23,6 +23,7 @@
 
     export let yelpResults;
     export let params;
+    let paramsString = new URLSearchParams(params);
 
     let message = "Like any of these?";
     let restaurants;
@@ -32,6 +33,7 @@
         restaurants = getRandomChoices(yelpResults.businesses, 3);
     } else {
         console.log("No results")
+        message = "Sorry, no results were found";
     }
 
     console.log(yelpResults)
@@ -97,14 +99,18 @@
 
 <h1>{message}</h1>
 <div id="results">
-    {#each restaurants as result}
-        <Result data={result}/>
-    {/each}
+    {#if restaurants}
+        {#each restaurants as result}
+            <Result data={result}/>
+        {/each}
+    {/if}
 </div>
 
 <div id="navButtons">
-    <button class="button" id="chooseFinalOption" on:click={chooseFinalOption}>Narrow it down</button>
-    <a href={"/restaurants/categories?" + new URLSearchParams(params)}>
+    {#if restaurants}
+        <button class="button" id="chooseFinalOption" on:click={chooseFinalOption}>Narrow it down</button>
+    {/if}
+    <a href={"/restaurants/categories?" + paramsString}>
         <button class="button alt-button">Start over</button>
     </a>
 </div>

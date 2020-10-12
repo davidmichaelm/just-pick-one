@@ -1,38 +1,40 @@
 <script context="module">
-    import Result from "./_result.svelte";
-    import {getRandomInt} from "../../../util.js";
-
-    let params;
-    let message = "Like any of these?";
-    let yelpResults = [];
-
     export async function preload(page, session) {
         console.log(page.query);
-        params = page.query;
+        let params = page.query;
 
         if (!params.locationType) {
             console.log("No location data");
             return this.redirect(302, 'restaurants/location');
         } else if (!params.categories) {
             console.log("No category data");
-            return this.redirect(302, "restaurants/categories");
+            return this.redirect(302, "restaurants/categories?" + new URLSearchParams(params));
         }
 
-        this.fetch("restaurants/find/yelp?" + new URLSearchParams(params))
-            .then(response => response.json())
-            .then(response => handleResponse(response));
+        const data = await this.fetch("restaurants/find/yelp?" + new URLSearchParams(params));
+        const yelpResults = await data.json();
+        return { yelpResults, params };
+    }
+</script>
+
+<script>
+    import Result from "./_result.svelte";
+    import {getRandomInt} from "../../../util.js";
+
+    export let yelpResults;
+    export let params;
+
+    let message = "Like any of these?";
+    let restaurants;
+
+    if (yelpResults && yelpResults.businesses) {
+        console.log("got results");
+        restaurants = getRandomChoices(yelpResults.businesses, 3);
+    } else {
+        console.log("No results")
     }
 
-    function handleResponse(response) {
-        console.log(response);
-
-        if (response && response.businesses) {
-            console.log("got results");
-            yelpResults = getRandomChoices(response.businesses, 3);
-        } else {
-            console.log("No results")
-        }
-    }
+    console.log(yelpResults)
 
     function getRandomChoices(data, numChoices) {
         let results = [];
@@ -54,8 +56,8 @@
     }
 
     function setRandomOption() {
-        const randomNum = getRandomInt(yelpResults.length);
-        yelpResults = [yelpResults[randomNum]];
+        const randomNum = getRandomInt(restaurants.length);
+        restaurants = [restaurants[randomNum]];
     }
 
     function hideFinalOptionButton() {
@@ -95,14 +97,14 @@
 
 <h1>{message}</h1>
 <div id="results">
-    {#each yelpResults as result}
+    {#each restaurants as result}
         <Result data={result}/>
     {/each}
 </div>
 
 <div id="navButtons">
     <button class="button" id="chooseFinalOption" on:click={chooseFinalOption}>Narrow it down</button>
-    <a href="restaurants/categories">
+    <a href={"/restaurants/categories?" + new URLSearchParams(params)}>
         <button class="button alt-button">Start over</button>
     </a>
 </div>

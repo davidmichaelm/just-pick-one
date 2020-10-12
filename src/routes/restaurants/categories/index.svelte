@@ -17,7 +17,9 @@
             return this.redirect(302, 'restaurants/location');
         }
     }
+</script>
 
+<script>
 /*    let submitClick;
 
     onMount(async () => {

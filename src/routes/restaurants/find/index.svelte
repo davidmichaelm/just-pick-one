@@ -29,14 +29,12 @@
     let restaurants;
 
     if (yelpResults && yelpResults.businesses) {
-        console.log("got results");
+        console.log("Got results");
         restaurants = getRandomChoices(yelpResults.businesses, 3);
     } else {
         console.log("No results")
         message = "Sorry, no results were found";
     }
-
-    console.log(yelpResults)
 
     function getRandomChoices(data, numChoices) {
         let results = [];
@@ -47,7 +45,6 @@
             data.splice(randomInt, 1);
         }
 
-        console.log(results);
         return results;
     }
 

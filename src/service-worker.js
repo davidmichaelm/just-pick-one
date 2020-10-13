@@ -68,7 +68,14 @@ self.addEventListener('fetch', event => {
 			.open(`offline${timestamp}`)
 			.then(async cache => {
 				try {
-					const response = await fetch(event.request);
+					/*const response = await fetch(event.request);
+					cache.put(event.request, response.clone());
+					return response;*/
+
+					// Testing out cache-first, since pages should be the same with the same URL
+					let response = await cache.match(event.request);
+					if (response) return response;
+					response = await fetch(event.request);
 					cache.put(event.request, response.clone());
 					return response;
 				} catch(err) {

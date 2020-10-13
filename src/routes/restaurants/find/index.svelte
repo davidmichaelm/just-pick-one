@@ -13,13 +13,15 @@
 
         const data = await this.fetch("restaurants/find/yelp?" + new URLSearchParams(params));
         const yelpResults = await data.json();
+        console.log("preload: found " + yelpResults.businesses.length + " results")
         return {yelpResults, params};
     }
 </script>
 
 <script>
     import Result from "./_result.svelte";
-    import {getRandomInt} from "../../../util.js";
+    import seedrandom from "seedrandom";
+    import {onMount} from "svelte";
 
     export let yelpResults;
     export let params;
@@ -28,12 +30,24 @@
     let message = "Like any of these?";
     let restaurants;
 
-    if (yelpResults && yelpResults.businesses) {
-        console.log("Got results");
-        restaurants = getRandomChoices(yelpResults.businesses, 3);
-    } else {
-        console.log("No results")
-        message = "Sorry, no results were found";
+    if (!params.rng) {
+        params.rng = "just-pick-one";
+    }
+
+    let rng = seedrandom(params.rng);
+
+    onMount(() => {
+        if (yelpResults && yelpResults.businesses) {
+            console.log("Got results, " + yelpResults.businesses.length + " of them");
+            restaurants = getRandomChoices(yelpResults.businesses, 3);
+        } else {
+            console.log("No results")
+            message = "Sorry, no results were found";
+        }
+    });
+
+    function getRandomInt(max) {
+        return Math.floor(rng() * Math.floor(max));
     }
 
     function getRandomChoices(data, numChoices) {

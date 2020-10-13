@@ -40,6 +40,7 @@
         }
 
         params.categories = categories;
+        params.rng = Math.random();
 
         return params;
     }

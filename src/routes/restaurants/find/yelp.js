@@ -1,27 +1,5 @@
 import fetch from 'node-fetch';
 
-export async function post(req, res, next) {
-
-    console.log(req.params);
-
-    if (!req.body.locationData.locationType) {
-        console.log("No location data");
-        return;
-    }
-
-    const queryString = makeQueryString(req.body);
-    console.log(queryString);
-
-    const yelpData = await getYelpData(queryString);
-    console.log(yelpData);
-
-    res.writeHead(200, {
-        'Content-Type': 'application/json'
-    });
-
-    res.end(JSON.stringify(yelpData));
-}
-
 export async function get(req, res, next) {
     console.log(req.query);
 

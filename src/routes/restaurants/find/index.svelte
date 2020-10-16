@@ -97,12 +97,8 @@
     #results {
         display: flex;
         flex-direction: row;
-    }
-
-    @media (max-width: 400px) {
-        #results {
-            flex-direction: column;
-        }
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     #navButtons {

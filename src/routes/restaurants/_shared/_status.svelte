@@ -38,7 +38,8 @@
 
 <style>
     div {
-        margin-top: 15px;
+        text-align: center;
+        margin: 15px 15px 0 15px;
     }
 
     a {

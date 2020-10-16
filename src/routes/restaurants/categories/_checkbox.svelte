@@ -1,6 +1,7 @@
 <script>
     export let id;
     export let name;
+    export let checked = false;
 </script>
 
 <style>
@@ -33,6 +34,6 @@
 </style>
 
 <div>
-    <input type="checkbox" name="{id}" id="{id}" value="on">
+    <input type="checkbox" name="{id}" id="{id}" value="on" checked={checked}>
     <label class="alt-button" for="{id}">{name}</label>
 </div>

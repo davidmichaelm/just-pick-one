@@ -14,7 +14,7 @@
 <script>
     import Checkbox from "./_checkbox.svelte"
     import {categories} from "./_categories.js";
-    import LocationStatus from "./_locationStatus.svelte";
+    import Status from "../_shared/_status.svelte";
     import {goto} from "@sapper/app";
 
     function submitClick() {
@@ -51,6 +51,9 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .submitContainer {
         margin: 15px;
     }
 </style>
@@ -60,7 +63,7 @@
 </svelte:head>
 
 
-<LocationStatus/>
+<Status params={params} useCategories={false}/>
 <form on:submit|preventDefault={submitClick}>
     <div class="flex">
         {#each categories as category}
@@ -68,7 +71,7 @@
         {/each}
     </div>
 
-    <div class="flex">
+    <div class="flex submitContainer">
         <input class="button" type="submit" value="Choose for me!">
     </div>
 </form>

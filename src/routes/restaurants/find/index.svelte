@@ -20,12 +20,12 @@
 
 <script>
     import Result from "./_result.svelte";
+    import Status from "../_shared/_status.svelte";
     import seedrandom from "seedrandom";
     import {onMount} from "svelte";
 
     export let yelpResults;
     export let params;
-    let paramsString = new URLSearchParams(params);
 
     let message = "Like any of these?";
     let restaurants;
@@ -51,12 +51,13 @@
     }
 
     function getRandomChoices(data, numChoices) {
+        let dataCopy = [...data];
         let results = [];
         for (let i = 0; i < numChoices; i++) {
-            const randomInt = getRandomInt(data.length);
-            results.push(data[randomInt]);
+            const randomInt = getRandomInt(dataCopy.length);
+            results.push(dataCopy[randomInt]);
 
-            data.splice(randomInt, 1);
+            dataCopy.splice(randomInt, 1);
         }
 
         return results;
@@ -80,11 +81,17 @@
     function changeToFinalMessage() {
         message = "Final Decision";
     }
+
+    function refreshResults() {
+        console.log("refreshing");
+        rng = seedrandom(Math.random());
+        restaurants = getRandomChoices(yelpResults.businesses, 3);
+    }
 </script>
 
 <style>
     h1 {
-        margin-top: 25px;
+        margin-top: 15px;
     }
 
     #results {
@@ -107,7 +114,7 @@
     <title>Just Pick One</title>
 </svelte:head>
 
-
+<Status params={params} useCategories={true}/>
 <h1>{message}</h1>
 <div id="results">
     {#if restaurants}
@@ -121,7 +128,6 @@
     {#if restaurants}
         <button class="button" id="chooseFinalOption" on:click={chooseFinalOption}>Narrow it down</button>
     {/if}
-    <a href={"/restaurants/categories?" + paramsString}>
-        <button class="button alt-button">Start over</button>
-    </a>
+    <button class="button alt-button" on:click={refreshResults}>Refresh</button>
+
 </div>

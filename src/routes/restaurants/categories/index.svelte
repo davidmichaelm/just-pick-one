@@ -17,6 +17,11 @@
     import Status from "../_shared/_status.svelte";
     import {goto} from "@sapper/app";
 
+    let paramCategories;
+    if (params && params.categories) {
+        paramCategories = params.categories.split(",");
+    }
+
     function submitClick() {
         let searchParams = new URLSearchParams(getFormData()).toString();
         goto("/restaurants/find?" + searchParams);
@@ -67,7 +72,7 @@
 <form on:submit|preventDefault={submitClick}>
     <div class="flex">
         {#each categories as category}
-            <Checkbox id={category.id} name={category.name}/>
+            <Checkbox id={category.id} name={category.name} checked={paramCategories.includes(category.id)}/>
         {/each}
     </div>
 

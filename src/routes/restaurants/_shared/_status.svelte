@@ -3,13 +3,15 @@
     export let params;
     export let useCategories;
 
-    let paramsString;
+    let paramsString = "";
     let categoriesText = "";
     let locationText = "";
 
-    if (useCategories && params && params.categories) {
+    if (params) {
         paramsString = new URLSearchParams(params);
+    }
 
+    if (useCategories && params && params.categories) {
         let categoryArray = params.categories.split(",");
         for (let x = 0; x < categoryArray.length; x++) {
 
@@ -29,6 +31,8 @@
         }
 
         categoriesText = categoriesText;
+    } else if (useCategories) {
+        categoriesText = "anything";
     }
 
     if (params && params.locationType) {

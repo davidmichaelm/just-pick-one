@@ -6,10 +6,10 @@
         if (!params.locationType) {
             console.log("No location data");
             return this.redirect(302, 'restaurants/location');
-        } else if (!params.categories) {
+        } /*else if (!params.categories) {
             console.log("No category data");
             return this.redirect(302, "restaurants/categories?" + new URLSearchParams(params));
-        }
+        }*/
 
         const data = await this.fetch("restaurants/find/yelp?" + new URLSearchParams(params));
         const yelpResults = await data.json();

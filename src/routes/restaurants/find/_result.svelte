@@ -2,14 +2,9 @@
     export let data;
 
     // TODO: validate data
-    data.price = undefined ? "$" : data.price; // quick hack
+    data.price = data.price === undefined ? "$" : data.price; // quick hack
 
-    let directionsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + encodeStringForUrl(data.name);
-
-    function encodeStringForUrl(string) {
-        return string.replace(/ /gi, '+');
-    }
-
+    let directionsUrl = "https://www.google.com/maps/dir/?api=1&destination=" + new URLSearchParams(data.name);
 
     const maxStars = 5;
 

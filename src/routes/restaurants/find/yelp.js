@@ -1,15 +1,14 @@
 import fetch from 'node-fetch';
 
-export async function post(req, res, next) {
+export async function get(req, res, next) {
+    console.log(req.query);
 
-    console.log(req.body);
-
-    if (!req.body.locationData.locationType) {
+    if (!req.query.locationType) {
         console.log("No location data");
         return;
     }
 
-    const queryString = makeQueryString(req.body);
+    const queryString = makeQueryString(req.query);
     console.log(queryString);
 
     const yelpData = await getYelpData(queryString);
@@ -28,20 +27,16 @@ function makeQueryString(formData) {
     if (Object.keys(formData).length > 0) {
 
         let location;
-        if (formData.locationData.locationType == "address") {
-            location = "location=" + formData.locationData.address;
+        if (formData.locationType === "address") {
+            location = "location=" + formData.address;
         } else {
-            location = "latitude=" + formData.locationData.latitude + "&longitude=" +formData.locationData.longitude;
+            location = "latitude=" + formData.latitude + "&longitude=" +formData.longitude;
         }
 
         query += location;
 
 
-        let categories = "&categories=";
-        for (let category in formData.categories) {
-            categories += category + ",";
-        }
-        categories = categories.slice(0, -1); // remove end comma
+        let categories = "&categories=" + formData.categories;
         query += categories;
     }
 

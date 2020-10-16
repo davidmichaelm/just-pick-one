@@ -1,5 +1,5 @@
 <script>
-    import {locationData} from "../../routes/restaurants/_stores.js";
+    import {locationData} from "../_stores.js";
 
     let locationText = "";
     $: {

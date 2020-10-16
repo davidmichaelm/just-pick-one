@@ -1,25 +1,33 @@
 <script>
-    import {createEventDispatcher} from 'svelte';
+    import {createEventDispatcher, onMount} from 'svelte';
 
     const dispatch = createEventDispatcher();
     let autocompletes = [];
     let clickToComplete = false;
     export let addressText = "";
+    let doAutocomplete;
 
-    $: fetch("/location/autocomplete?input=" + addressText, {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
+    onMount(async () => {
+        doAutocomplete = () => {
+            // fetch can't be used server-side, so this function can only be loaded client-side
+            fetch("/restaurants/location/autocomplete?input=" + addressText, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(response => {
+                    let newAutocompletes = [];
+                    for (let option of response) {
+                        newAutocompletes.push(option.description);
+                    }
+                    autocompletes = newAutocompletes;
+                });
         }
     })
-            .then(response => response.json())
-            .then(response => {
-                let newAutocompletes = [];
-                for (let option of response) {
-                    newAutocompletes.push(option.description);
-                }
-                autocompletes = newAutocompletes;
-            });
+
+    $: if (addressText !== "") doAutocomplete();
 
     function checkAddress() {
         if (addressText === undefined || addressText === null || addressText === "") {

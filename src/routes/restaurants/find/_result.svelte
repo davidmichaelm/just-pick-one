@@ -82,11 +82,17 @@
 <div class="result">
     <a href="{data.url}"><h2>{data.name}</h2></a>
     <figure>
-        <a href="{data.url}"><img src="{data.image_url}" height="100" width="100"></a>
+        <a href="{data.url}"><img alt="{data.name} header image" src="{data.image_url}" height="100" width="100"></a>
     </figure>
     <div>
-        {#each stars as star}
-            <img width="25px" height="25px" src="{star}.png">
+        {#each stars as star, i}
+
+                 {#if i === 0}
+                     <img width="25px" height="25px" src="{star}.png" alt="{data.rating} out of 5 star rating">
+                 {:else}
+                     <img width="25px" height="25px" src="{star}.png" alt="">
+                 {/if}
+
         {/each}
     </div>
 
@@ -94,12 +100,12 @@
         <div class="price">{data.price}</div>
         <div>
             <a href="{directionsUrl}">
-                <img width="25px" height="25px" src="map-pin.png">
+                <img width="25px" height="25px" src="map-pin.png" alt="Direction to {data.name}">
             </a>
         </div>
         <div>
             <a href="tel:{data.phone}">
-                <img width="25px" height="25px" src="phone.png">
+                <img width="25px" height="25px" src="phone.png" alt="Phone number for {data.name}">
             </a>
         </div>
 <!--        {#each data.transactions as transaction}-->

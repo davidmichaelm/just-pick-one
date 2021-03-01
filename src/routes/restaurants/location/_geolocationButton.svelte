@@ -44,6 +44,6 @@
 
 
 <div on:click={checkCurrentLocation}>
-    <img src="target.png" height="19px" width="19px"/>
+    <img src="target.png" height="19px" width="19px" alt="Target symbol for Use My Current Location"/>
     <span>Use My Current Location</span>
 </div>

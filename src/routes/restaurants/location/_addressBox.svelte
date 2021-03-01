@@ -91,10 +91,12 @@
     #clickToComplete {
         margin: 15px;
         text-align: center;
+        display: flex;
+        flex-direction: column;
     }
 
-    a:hover {
-        color: gray;
+    #clickToComplete .button {
+        margin: 10px;
     }
 
 </style>
@@ -115,7 +117,7 @@
     <div id="clickToComplete">
         <h3>Did you mean...</h3>
         {#each autocompletes as autocomplete}
-            <div on:click={() => useClickToComplete(autocomplete)}><a href="#">{autocomplete}</a></div>
+            <div on:click={() => useClickToComplete(autocomplete)} class="button">{autocomplete}</div>
         {/each}
     </div>
 {/if}

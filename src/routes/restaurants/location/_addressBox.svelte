@@ -1,67 +1,47 @@
 <script>
     import {createEventDispatcher, onMount} from 'svelte';
+    import AutoComplete from "simple-svelte-autocomplete";
 
     const dispatch = createEventDispatcher();
     let autocompletes = [];
-    let clickToComplete = false;
-    export let addressText = "";
+    export let address = "";
+    $: addressInput = address.text;
+    $: addressIsValid = validateAddress(addressInput);
+
     let doAutocomplete;
 
-    onMount(async () => {
-        doAutocomplete = () => {
-            // fetch can't be used server-side, so this function can only be loaded client-side
-            fetch("/restaurants/location/autocomplete?input=" + addressText, {
-                method: "GET",
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(response => {
-                    let newAutocompletes = [];
-                    for (let option of response) {
-                        newAutocompletes.push(option.description);
-                    }
-                    autocompletes = newAutocompletes;
-                });
-        }
-    })
-
-    $: if (addressText !== "") doAutocomplete();
-
-    function checkAddress() {
-        if (addressText === undefined || addressText === null || addressText === "") {
-            // error message for user
-            console.log("address is empty");
-            return;
+    function validateAddress(a) {
+        if (a === undefined || a === null || a === "") {
+            return false;
         }
 
         let match = false;
         for (let option of autocompletes) {
-            if (option.toUpperCase() === addressText.toUpperCase()) {
+            if (option.toUpperCase() === a.toUpperCase()) {
                 match = true;
-                addressText = option;
-                console.log("address matched");
-                sendAddress();
             }
         }
 
-        if (!match) {
-            clickToComplete = true;
-            console.log("click to complete");
-        }
+        return match;
     }
 
-    function useClickToComplete(address) {
-        addressText = address;
-        sendAddress();
-    }
+    onMount(async () => {
+        doAutocomplete = async (keyword) => {
+            // fetch can't be used server-side, so this function can only be loaded client-side
+            const response = await fetch("/restaurants/location/autocomplete?input=" + encodeURIComponent(keyword));
+            const json = await response.json();
+            autocompletes = json.map(j => j.text);
+            addressInput = keyword;
+
+            return json;
+        }
+    })
 
     function sendAddress() {
         dispatch('use', {
             locationData: {
                 locationType: "address",
-                address: addressText
+                address: address.text
             }
         })
     }
@@ -73,13 +53,8 @@
         margin: 15px;
     }
 
-    input {
-        vertical-align: middle;
-        width: 255px;
-        font-size: 1em;
-        padding: 7.5px;
-        border-radius: 5px;
-        border-style: solid;
+    :global(.addressBox) {
+        min-width: 400px !important;
     }
 
     .button {
@@ -87,37 +62,22 @@
         padding: 8.75px 12.5px 8.75px 12.5px;
         margin-left: 5px;
     }
-
-    #clickToComplete {
-        margin: 15px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-    }
-
-    #clickToComplete .button {
-        margin: 10px;
-    }
-
 </style>
-{#if !clickToComplete}
-    <div class="flex">
 
-        <input type="text" list="places" bind:value={addressText} placeholder="Enter Zip Code, City, or State">
-        <span class="button" on:click={checkAddress}>Go</span>
-        <datalist id="places">
-            {#each autocompletes as autocomplete}
-                <option value="{autocomplete}">
-            {/each}
-        </datalist>
-    </div>
-{/if}
+<div class="flex">
+    <AutoComplete
+            labelFieldName="text"
+            valueFieldName="text"
+            searchFunction={doAutocomplete}
+            bind:selectedItem={address}
+            hideArrow
+            placeholder="Enter an address..."
+            className="addressBox"
+            name="test"
+    >
+    </AutoComplete>
 
-{#if clickToComplete}
-    <div id="clickToComplete">
-        <h3>Did you mean...</h3>
-        {#each autocompletes as autocomplete}
-            <div on:click={() => useClickToComplete(autocomplete)} class="button">{autocomplete}</div>
-        {/each}
-    </div>
-{/if}
+    {#if addressIsValid}
+        <button class="button" on:click={sendAddress}>Go</button>
+    {/if}
+</div>
